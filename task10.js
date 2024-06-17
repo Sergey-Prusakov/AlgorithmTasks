@@ -1,7 +1,7 @@
 // 10
 
 // Есть объект
-
+// *** Как это правильно сделать?
 const tree = {
     value: 1,
     next: [
@@ -38,6 +38,7 @@ const tree = {
 let sum = (obj, key, sum) => {
     let stringObj = JSON.stringify(obj);
     console.log(stringObj.slice(stringObj.indexOf(`"${key}":`) + key.length + 3, stringObj.indexOf(`"${key}":`) + key.length + 4));
+    console.log(Object.entries(obj));
     return stringObj.indexOf(`"${key}":`)
 }
 

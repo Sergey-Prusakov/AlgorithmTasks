@@ -2,19 +2,15 @@
 
 // написать функцию суммирования, которая работает в двух режимах
 
-function curry(f) { // curry(f) выполняет каррирование
-    return function (a) {
-        return function (b) {
-            return f(a, b);
-        };
-    };
-}
-
 function sum(a, b) {
-    return a + b;
+    if (b) {
+        return a + b;
+    }
+    return function (c) {
+        return a + c;
+    };
+
 }
 
-let curriedSum = curry(sum);
-
-console.log(sum(1, 2)); // *** Так правильно?
-console.log(curriedSum(1)(2));
+console.log(sum(1, 2)); // Вывод: 3
+console.log(sum(1)(2)); // Вывод: 3
