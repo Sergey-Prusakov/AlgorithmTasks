@@ -1,12 +1,11 @@
-
-// import {customParseFormat} from 'dayjs/plugin/customParseFormat'
 // 4
 
 // Напишите функцию которая сортирует массив по датам
 
-// console.log(customParseFormat)
-//dayjs.extend(customParseFormat)
-const date = dayjs('10.01.2016', 'DD-MM-YYYY').format('DD-MM-YYYY');
+console.log(window.dayjs_plugin_customParseFormat);
+
+dayjs.extend(window.dayjs_plugin_customParseFormat)
+const date = dayjs('10.01.2016', 'DD.MM.YYYY')
 
 console.log(date);
 
@@ -18,24 +17,18 @@ const array = [
 ];
 
 const sortByDate = (arr) => { // *** Как перевести дату?
-    /*for (let i = 0; i < arr.length; i++) {
+    /* for (let i = 0; i < arr.length; i++) {
+        console.log(new Date(dayjs(arr[i].date, 'DD.MM.YYYY')).getTime());
         for (let j = 0; j < arr.length; j++) {
-            if (new Date(arr[i].date).getTime() < new Date(arr[j].date).getTime()) {
-                const temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
+            if (new Date(dayjs(arr[i].date, 'DD.MM.YYYY')).getTime() > new Date(dayjs(arr[j].date, 'DD.MM.YYYY')).getTime()) {
+                [arr[i], arr[j]] = [arr[j], arr[i]]
             }
         }
-    }*/
+    }
 
-   //console.log(new Intl.DateTimeFormat("ru").format(arr[0].date));
-   console.log(new Date(arr[0].date).toLocaleDateString("en-US"));
-   console.log(new Date(new Date(arr[0].date).toLocaleDateString("en-US")));
+    return arr */
 
-   console.log(new Date(arr[2].date.toLocaleDateString("de-DE")));
-   console.log(new Date(arr[3].date.toLocaleDateString("de-DE")));
-
-   return arr.sort((a, b) => new Date(a.date) - new Date(b.date));
+   return arr.sort((a, b) => new Date(dayjs(b.date, 'DD.MM.YYYY')) - new Date(dayjs(a.date, 'DD.MM.YYYY')));
 }
 
 console.log(sortByDate(array));
