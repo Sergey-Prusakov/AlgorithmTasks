@@ -3,7 +3,6 @@
 // Написать метод массивов reverse через рекурсию ***
 
 function reverseArray(arr) {
-    console.log(arr);
     if (arr.length <= 1) {
         return arr;
     } else {

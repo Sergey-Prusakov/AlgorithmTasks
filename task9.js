@@ -4,21 +4,24 @@
 // считает количество символов в строке и выводит
 //  *количество символов**символ* 
 
-// Пример aaabbcaff → выведет 4a2b1c1a2f
+// Пример aaabbcaff → выведет 3a2b1c1a2f
 
 const string = 'aaabbcaff';
 
 let getNumberCharacters = (str) => {
-    let res = '';
-    let uniqElements = '';
+    let result = "";
+    let count = 1;
 
-    uniqElements = [... new Set(str)].join('')
-
-    for (let i in uniqElements) {
-        res += (str.split(uniqElements[i]).length - 1) + uniqElements[i]
+    for (let i = 1; i <= str.length; i++) {
+        if (str[i] === str[i - 1]) {
+            count++;
+        } else {
+            result += count + str[i - 1];
+            count = 1;
+        }
     }
 
-    return res
+    return result;
 }
 
 console.log(getNumberCharacters(string));

@@ -15,4 +15,6 @@ console.log('arr1', arr1)
 
 // Способ 2
 
-console.log('arr2', Array.from({ length: 50 }, (elem, i) => i + 1)) 
+let arr2 = ('arr2', Array.from({ length: 50 }, (elem, i) => i + 1))
+
+console.log(arr2);

@@ -15,68 +15,46 @@ const endPoints = [
 // *V3 - тут id последней таски, полученной во втором запросе
 
 // Способ 1
-const func = async () => {
-    const data1 = await fetch(endPoints[0])
-        .then((response) => response.json())
-        .then((data) => data)
-        .catch((err) => {
+
+const makeRequest = (link) => {
+    console.log(link);
+    return fetch(link)
+        .then(response => response.json())
+        .then(data => data)
+        .catch(err => {
             console.error(err);
         });
+}
+
+const func = async () => {
+    const data1 = await makeRequest(endPoints[0])
     console.log(data1);
 
-    const data2 = await fetch(endPoints[1].replace('*V2', data1[0].id))
-        .then((response) => response.json())
-        .then((data) => data)
-        .catch((err) => {
-            console.error(err);
-        });
+    const data2 = await makeRequest(endPoints[1].replace('*V2', data1[0].id))
     console.log(data2);
 
-    const data3 = await fetch(endPoints[2].replace('*V3', data2[data2.length - 1].id))
-        .then((response) => response.json())
-        .then((data) => data)
-        .catch((err) => {
-            console.error(err);
-        });
+    const data3 = await makeRequest(endPoints[2].replace('*V3', data2[data2.length - 1].id))
     console.log(data3);
 }
 
-func() 
+func()
 
 // Способ 2
 
-new Promise(function (resolve, reject) {
-
-    const data1 = fetch(endPoints[0])
-        .then((response) => response.json())
-        .then((data) => data)
-        .catch((err) => {
-            console.error(err);
-        });
-
+new Promise(function (resolve) {
+    const data1 = makeRequest(endPoints[0])
     resolve(data1)
-
 }).then(function (res) {
     console.log(res);
 
-    const data2 = fetch(endPoints[1].replace('*V2', res[0].id))
-        .then((response) => response.json())
-        .then((data) => data)
-        .catch((err) => {
-            console.error(err);
-        });
+    const data2 = makeRequest(endPoints[1].replace('*V2', res[0].id))
     return data2
 
 }).then(function (res) {
     console.log(res);
 
-    const data3 = fetch(endPoints[2].replace('*V3', res[res.length - 1].id))
-        .then((response) => response.json())
-        .then((data) => data)
-        .catch((err) => {
-            console.error(err);
-        });
+    const data3 = makeRequest(endPoints[2].replace('*V3', res[res.length - 1].id))
     return data3
 }).then(function (res) {
     console.log(res);
-})
+}) 

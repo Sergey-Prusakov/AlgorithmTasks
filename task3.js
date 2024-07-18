@@ -4,10 +4,8 @@
 // Пример работы функции:
 
 const convertToObject = (str) => {
-
     const res = str.split('').reduceRight((acc, elem) => {
         return { [elem]: acc }
-
     }, {})
 
     return JSON.stringify(res);

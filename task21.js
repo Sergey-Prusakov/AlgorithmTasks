@@ -1,53 +1,47 @@
 // 21 напишите кастомный Flat, протипизируйте его
+
 function flat(input) {
     if (Array.isArray(input)) {
         return flattenArray(input);
-    }
-    else if (typeof input === 'object') {
+    } else if (typeof input === 'object' && input !== null) {
         return flattenObject(input);
-    }
-    else {
+    } else {
         return input;
     }
 }
+
 function flattenArray(arr) {
-    var result = [];
-    arr.forEach(function (item) {
+    const result = [];
+    arr.forEach(item => {
         if (Array.isArray(item)) {
-            console.log(result, item);
-            result.push.apply(result, flattenArray(item));
-        }
-        else if (typeof item === 'object') {
+            result.push(...flattenArray(item));
+        } else if (typeof item === 'object' && item !== null) {
             result.push(flattenObject(item));
-        }
-        else {
+        } else {
             result.push(item);
         }
     });
     return result;
 }
+
 function flattenObject(obj) {
-    var result = {};
-    for (var _i = 0, _a = Object.entries(obj); _i < _a.length; _i++) {
-        var _b = _a[_i], key = _b[0], value = _b[1];
+    const result = {};
+    for (const [key, value] of Object.entries(obj)) {
         if (Array.isArray(value)) {
             result[key] = flattenArray(value);
-        }
-        else if (typeof value === 'object' && value !== null) {
-            var flatObject = flattenObject(value);
-            for (var _c = 0, _d = Object.entries(flatObject); _c < _d.length; _c++) {
-                var _e = _d[_c], nestedKey = _e[0], nestedValue = _e[1];
+        } else if (typeof value === 'object' && value !== null) {
+            const flatObject = flattenObject(value);
+            for (const [nestedKey, nestedValue] of Object.entries(flatObject)) {
                 result[nestedKey] = nestedValue;
             }
-        }
-        else {
+        } else {
             result[key] = value;
         }
     }
     return result;
 }
-// Пример использования
-var test1 = [
+
+const test1 = [
     1,
     2,
     [[3], 4, [5, [11], 9]],
@@ -59,15 +53,17 @@ var test1 = [
                 foo: 33,
                 name: 'oleg',
                 olga: true,
-                unic: { "in": 'in' }
+                unic: { in: 'in' }
             }
         }
     },
     ['098', [33, 44, [[12], 1, [56]]]]
 ];
+
 console.log(JSON.stringify(flat(test1)));
 // [1, 2, 3, 4, 5, 11, 9, { one: 1, bar: 'pop', foo: 33, name: 'oleg', olga: true, in: 'in' }, '098', 33, 44, 12, 1, 56]
-var test2 = {
+
+const test2 = {
     foo: {
         one: 1,
         two: {
@@ -76,7 +72,7 @@ var test2 = {
                 foo2: 33,
                 name: 'oleg',
                 olga: true,
-                unic: { "in": 'in' }
+                unic: { in: 'in' }
             }
         },
         abc: [
@@ -85,7 +81,8 @@ var test2 = {
             [[3], 4, [5, [11], 9]],
             ['098', [33, 44, [[12], 1, [56]]]]
         ]
-    }
+    },
 };
+
 console.log(JSON.stringify(flat(test2)));
 // {one: 1, bar: 'pop', foo2: 33, name: 'oleg', olga: true, in: 'in', abc: [1, 2, 3, 4, 5, 11, 9, '098', 33, 44, 12, 1, 56]}
